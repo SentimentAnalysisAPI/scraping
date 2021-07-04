@@ -18,14 +18,15 @@ def Main():
     prawReddit = PrawReddit()
     prawSubreddit = prawReddit.subreddit("wallstreetbets")
     
-    PrintJson(SubredditData(prawSubreddit))
+    # PrintJson(SubredditData(prawSubreddit))
 
     prawPosts = prawSubreddit.hot(limit=100)
     prawPost = next(prawPosts)
     
-    PrintJson(PostData(prawPost))
+    # PrintJson(PostData(prawPost))
 
 def PrawReddit():
+    ### https://praw.readthedocs.io/en/latest/code_overview/reddit_instance.html
     prawReddit = praw.Reddit(client_id="qfGgNSP41jjYdw",
         client_secret="1ebvBU9iD1-JnjHsVLYzKth6ntRd3w",
         user_agent="mybot")
