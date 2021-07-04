@@ -1,8 +1,8 @@
-# SocialMediaSentiment
+# Financial Sentiment
 
 ## Sites
 * Social Media
-    
+
     * Reddit
 
     * Twitter
@@ -28,13 +28,13 @@
     * [The Guardian](https://www.theguardian.com/)
 
     * [Financial Express](https://www.financialexpress.com/)
-    
+
 ## Sentiment Analysis Modules
 
 * Text Blob ([textblob](https://textblob.readthedocs.io/en/dev/)), Vader Sentiment ([vaderseniment](https://github.com/cjhutto/vaderSentiment))
 
     * [Stock Market Sentiment Analysis Using Python & Machine Learning](https://youtu.be/4OlvGGAsj8I)
-    
+
     * [Sentiment Analysis in Python with TextBlob and VADER Sentiment (also Dash p.6)](https://youtu.be/qTyj2R-wcks)
 
 * Natural Language Toolkit ([nltk](https://www.nltk.org/index.html))
