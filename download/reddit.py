@@ -11,8 +11,8 @@ if __name__ == '__main__':
 from utility.display import PrintJson
 from utility.file import WriteJson
 
-import praw
 ### https://praw.readthedocs.io/en/latest/index.html
+import praw
 
 def Main():
     prawReddit = PrawReddit()

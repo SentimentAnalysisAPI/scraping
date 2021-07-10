@@ -1,6 +1,7 @@
 # Financial Sentiment
 
-## Sites
+## Scraped Websites
+
 * Social Media
 
     * Reddit
@@ -42,6 +43,8 @@
     * [NLTK with Python 3 for Natural Language Processing](https://youtube.com/playlist?list=PLQVvvaa0QuDf2JswnfiGkliBInZnIC4HL)
 
     * [Sentiment Analysis with/without NLTK Python](https://youtube.com/playlist?list=PLhTjy8cBISEoOtB5_nwykvB9wfEDscuEo)
+
+    * [Stock News Sentiment Analysis with Python!](https://towardsdatascience.com/stock-news-sentiment-analysis-with-python-193d4b4378d4)
 
 ## Other
 
