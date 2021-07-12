@@ -23,8 +23,8 @@ def Main():
     for prawPost in prawPosts[:3]:
         pass
         # PrintJson(PostData(prawPost))
-    # prawPost = next(prawPosts)
-    # PrintJson(PostData(prawPost))
+    prawPost = next(prawPosts)
+    PrintJson(PostData(prawPost))
 
 def PrawReddit():
     ### https://praw.readthedocs.io/en/latest/code_overview/reddit_instance.html
@@ -53,10 +53,10 @@ def PostData(prawPost):
         "name": prawPost.name,
         "title": prawPost.title,
         "url": prawPost.url,
-        "timestamp": prawPost.url,
         "likes": prawPost.score,
         "dislikes": (prawPost.score / prawPost.upvote_ratio) - prawPost.score,
         "commentNum": prawPost.num_comments,
+        "time": prawPost.created_utc,
     }
 
 if __name__ == '__main__':
