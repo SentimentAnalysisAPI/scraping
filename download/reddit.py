@@ -17,12 +17,13 @@ import praw
 def Main():
     prawReddit = PrawReddit()
     prawSubreddit = prawReddit.subreddit("wallstreetbets")
-    
     # PrintJson(SubredditData(prawSubreddit))
 
-    prawPosts = prawSubreddit.hot(limit=100)
-    prawPost = next(prawPosts)
-    
+    prawPosts = list(prawSubreddit.hot(limit=100))
+    for prawPost in prawPosts[:3]:
+        pass
+        # PrintJson(PostData(prawPost))
+    # prawPost = next(prawPosts)
     # PrintJson(PostData(prawPost))
 
 def PrawReddit():
@@ -50,6 +51,7 @@ def PostData(prawPost):
     return {
         "id": prawPost.id,
         "name": prawPost.name,
+        "title": prawPost.title,
         "url": prawPost.url,
         "timestamp": prawPost.url,
         "likes": prawPost.score,

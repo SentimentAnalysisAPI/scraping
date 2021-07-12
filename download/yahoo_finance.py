@@ -9,7 +9,7 @@ if __name__ == '__main__':
     sys.path.append(path)
 
 from utility.display import PrintJson
-from utility.file import WriteJson
+from utility.file import ReadJson, WriteJson
 from utility.web import Soup
 
 import json
@@ -22,10 +22,12 @@ def DataJson():
 	soup = Soup(response.text)
 	pattern = re.compile(r"\s--\sData\s--\s")
 	data = soup.find("script", text=pattern).contents[0].strip()
-	data = json.loads(data[data.find("context") - 2:-11])
+	start = data.find("context") - 2
+	end = -11
+	data = json.loads(data[start:end])
 	return data
 
 if __name__ == '__main__':
 	data = DataJson()
 	# PrintJson(data)
-	# WriteJson("yahoo_finance_data.json", data)
+	WriteJson("yahoo_finance_data.json", data)
