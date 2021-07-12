@@ -9,7 +9,7 @@ if __name__ == '__main__':
     sys.path.append(path)
 
 from utility.display import PrintJson
-from utility.file import ReadSoup, WriteJson, WriteSoup
+from utility.file import Path, ReadSoup, WriteJson, WriteSoup
 from utility.web import Click, Soup
 
 from selenium import webdriver
