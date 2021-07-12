@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 def ReadJson(path):
 	with open(path, "r") as f:
@@ -20,3 +21,10 @@ def WriteSoup(path, soup):
 
 def MakeFolder(path):
 	if not os.path.exists(path): os.mkdir(path)
+
+def Path(*parts):	
+    path = os.path.abspath(__file__)
+    name = "FinancialSentiment"
+    index = path.rfind(name) + len(name)
+    path = path[:index]
+    return path + "/" + "/".join(parts)
