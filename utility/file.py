@@ -15,7 +15,7 @@ def WriteJson(path, jsonObject):
 		f.write(json.dumps(jsonObject, indent=4))
 
 def WriteSoup(path, soup):
-	with open(path, "w") as f:
+	with open(path, "w", encoding='utf-8') as f:
 	    f.write(soup.prettify())
 
 def MakeFolder(path):
