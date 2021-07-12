@@ -23,7 +23,7 @@ def Main():
     Load(50)
 
 def Load(num):
-    driver = webdriver.Chrome("chromedriver/chromedriver.exe")
+    driver = webdriver.Chrome("chromedriver/chromedriver")
     driver.get("https://www.businessinsider.com/latest#")
 
     driver.switch_to.frame(driver.find_element_by_id("sp_message_iframe_364840"))
