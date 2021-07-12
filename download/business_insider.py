@@ -9,21 +9,21 @@ if __name__ == '__main__':
     sys.path.append(path)
 
 from utility.display import PrintJson
-from utility.file import ReadSoup, WriteJson, WriteSoup
+from utility.file import Path, ReadSoup, WriteJson, WriteSoup
 from utility.web import Click, Soup
 
+import datetime
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
 import time
-import datetime
 
 def Main():
     Load(50)
 
 def Load(num):
-    driver = webdriver.Chrome("chromedriver/chromedriver.exe")
+    driver = webdriver.Chrome(Path("download", "chromedriver", "chromedriver"))
     driver.get("https://www.businessinsider.com/latest#")
 
     driver.switch_to.frame(driver.find_element_by_id("sp_message_iframe_364840"))
