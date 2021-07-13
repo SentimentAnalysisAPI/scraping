@@ -13,9 +13,6 @@ from utility.file import Path, ReadSoup, WriteJson, WriteSoup
 from utility.web import Click, Soup
 
 from selenium import webdriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
 import time
 import datetime
 

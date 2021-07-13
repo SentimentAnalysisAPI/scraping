@@ -9,64 +9,68 @@ if __name__ == '__main__':
     sys.path.append(path)
 
 from utility.display import PrintJson
-from utility.file import ReadJson, WriteJson
-from utility.web import Soup
+from utility.file import Path, ReadSoup, WriteJson, WriteSoup
+from utility.web import Click, Soup
 
+from selenium import webdriver
+import time
+import datetime
 
-import json
-import re
-import requests
-from datetime import datetime
-import pytz
+def Main():
+    Load()
 
-def DataJson():
-    ### https://youtu.be/fw4gK-leExw
-    response = requests.get("https://finance.yahoo.com/")
-    soup = Soup(response.text)
-    pattern = re.compile(r"\s--\sData\s--\s")
-    data = soup.find("script", text=pattern).contents[0].strip()
-    start = data.find("context") - 2
-    end = -11
-    data = json.loads(data[start:end])
-    return data
-"""
-def DataJson_2():
-    ### https://youtu.be/fw4gK-leExw
-    response = requests.get("https://finance.yahoo.com/")
-    soup = Soup(response.text)
-    pattern = re.compile(r"Data\s--\s")
-    data_2 = soup.find("script", text=pattern).contents[0].strip()
-    start = data_2.find("context") - 2
-    end = -11
-    data_2 = json.loads(data_2[start:end])
-    return data_2
-"""
-data = DataJson()
+def Load():
+    driver = webdriver.Chrome(Path("download", "chromedriver", "chromedriver"))
+    driver.get("https://finance.yahoo.com/")
 
-#data_2 = DataJson_2()
+    xpath = "//button[@type='submit' and @name='agree' and @value='agree']"
+    button = driver.find_elements_by_xpath(xpath)[0]
+    button.click()
 
-Yahoo_data = []
-root_to_data = data["context"]["dispatcher"]["stores"]["StreamStore"]["streams"]["mega.c"]["data"]["stream_items"]
+    soup = Soup(driver.page_source)
+    posts = soup.findAll("li", {"class": "js-stream-content Pos(r)"})
+    print(len(posts))
 
-def DataYahoo():
-    for entry in root_to_data:
+    previous = 0
+    while len(posts) < 150 or not previous == len(posts):
+        previous = len(posts)
+        driver.execute_script("window.scrollTo(0, 100000);")
+        soup = Soup(driver.page_source)
+        posts = soup.findAll("li", {"class": "js-stream-content Pos(r)"})
+        print(len(posts))
 
-        infos = {
-        #    "summary": entry["summary"],
-        #    "pubtime": entry["pubtime"],
-        #    "categoryLabel": entry["categoryLabel"],
-            "title": entry["title"],
-        #    "stockTickers": entry["finance"]["stockTickers"]
+    while True:
+        pass
+    # data = [DataJson(post) for post in posts]
+    # WriteJson("businessinsider.json", data)
 
-            }
+def DataJson(post):
+    try:
+        return {
+            "title": post.find("a", {"class": "tout-title-link"}).text.strip(),
+            "timestamp": Timestamp(post.find("span", {"class": "tout-timestamp headline-regular js-date-format js-rendered"}).text.strip()),
+            "category": post.find("a", {"class": "tout-tag-link headline-bold"}).text.strip(),
+            "text": post.find("div", {"class": "tout-copy river body-regular"}).text.strip()
+        }
+    except: return {}
 
-        Yahoo_data.append(infos)
-
-
-    return Yahoo_data
+### timeText format like "1 minute ago" or "10 hours ago"
+def Timestamp(timeText):
+    timestamp = time.time()
+    num, kind = timeText.split()[:2]
+    num = int(num)
+    if kind in ["second", "seconds"]:
+        multiple = 1
+    elif kind in ["minute", "minutes"]:
+        multiple = 60
+    elif kind in ["hour", "hours"]:
+        multiple = 3600
+    elif kind in ["day", "days"]:
+        multiple = 3600 * 24
+    else:
+        # "Jul 9, 2021, 8:03 PM"
+        delta = 1
+    return int(timestamp + num * multiple)
 
 if __name__ == '__main__':
-    infos = DataYahoo()
-    PrintJson(Yahoo_data)
-    WriteJson("yahoo_finance_data.json", data)
-    #("yahoo_finance_data_2.json", data_2)
+    Main()
