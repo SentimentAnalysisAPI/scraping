@@ -9,7 +9,7 @@ if __name__ == '__main__':
     sys.path.append(path)
 
 from utility.display import PrintJson
-from utility.file import Path, ReadSoup, WriteJson, WriteSoup
+from utility.file import Path, ReadJson, ReadSoup, WriteJson, WriteSoup
 from utility.web import Click, Soup
 
 from selenium import webdriver
@@ -17,7 +17,8 @@ import time
 import datetime
 
 def Main():
-    Load()
+    posts = Load()
+    return posts
 
 def Load():
     driver = webdriver.Chrome(Path("download", "chromedriver", "chromedriver"))
@@ -27,9 +28,11 @@ def Load():
     button = driver.find_elements_by_xpath(xpath)[0]
     button.click()
 
-    soup = Soup(driver.page_source)
-    posts = soup.findAll("li", {"class": "js-stream-content Pos(r)"})
-    print(len(posts))
+    # soup = Soup(driver.page_source)
+    # posts = soup.findAll("li", {"class": "js-stream-content Pos(r)"})
+    # print(len(posts))
+
+    posts = []
 
     previous = 0
     while len(posts) < 150 or not previous == len(posts):
@@ -39,18 +42,26 @@ def Load():
         posts = soup.findAll("li", {"class": "js-stream-content Pos(r)"})
         print(len(posts))
 
-    while True:
-        pass
-    # data = [DataJson(post) for post in posts]
-    # WriteJson("businessinsider.json", data)
+    soup = Soup(driver.page_source)
+    WriteSoup("full.html", soup)
+
+    # if not os.path.exists("test"): os.mkdir("test")
+    # for i, post in enumerate(posts): WriteSoup(Path("download", "test", f"{str(i).zfill(3)}.html"), post)
+
+    posts = [DataJson(post) for post in posts]
+
+    # WriteJson("posts.json", posts)
+
+    return posts
 
 def DataJson(post):
     try:
+        if len(post.findAll("a", {"target": "_blank"})) > 0: return {}
         return {
-            "title": post.find("a", {"class": "tout-title-link"}).text.strip(),
-            "timestamp": Timestamp(post.find("span", {"class": "tout-timestamp headline-regular js-date-format js-rendered"}).text.strip()),
-            "category": post.find("a", {"class": "tout-tag-link headline-bold"}).text.strip(),
-            "text": post.find("div", {"class": "tout-copy river body-regular"}).text.strip()
+            "title": post.find("h3").text.strip(),
+            "timestamp": Timestamp(post.find("div", {"class": "C(#959595) Fz(11px) D(ib) Mb(6px)"}).contents[2].text.strip()),
+            "category": post.find("div", {"data-test-locator": "catlabel"}).text.strip(),
+            "text": post.find("p").text.strip()
         }
     except: return {}
 
@@ -73,4 +84,5 @@ def Timestamp(timeText):
     return int(timestamp + num * multiple)
 
 if __name__ == '__main__':
-    Main()
+    posts = Main()
+    PrintJson(posts)
