@@ -9,19 +9,18 @@ if __name__ == '__main__':
     sys.path.append(path)
 
 from utility.display import PrintJson
-from utility.file import Path, ReadJson, ReadSoup, WriteJson, WriteSoup
-from utility.web import Click, Soup
+from utility.file import Path, WriteSoup
+from utility.web import ChromeDriver, Soup
 
 from selenium import webdriver
 import time
-import datetime
 
 def YahooFinance():
     posts = Load()
     return posts
 
 def Load():
-    driver = webdriver.Chrome(Path("download", "chromedriver", "chromedriver"))
+    driver = ChromeDriver()
     driver.get("https://finance.yahoo.com/")
 
     xpath = "//button[@type='submit' and @name='agree' and @value='agree']"
@@ -40,7 +39,7 @@ def Load():
         driver.execute_script("window.scrollTo(0, 100000);")
         soup = Soup(driver.page_source)
         posts = soup.findAll("li", {"class": "js-stream-content Pos(r)"})
-        print(len(posts))
+        # print(len(posts))
 
     soup = Soup(driver.page_source)
     # WriteSoup("full.html", soup)

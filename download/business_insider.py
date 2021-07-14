@@ -8,11 +8,8 @@ if __name__ == '__main__':
     path = path[:index]
     sys.path.append(path)
 
-from utility.display import PrintJson
-from utility.file import Path, ReadSoup, WriteJson, WriteSoup
-from utility.web import Click, Soup
+from utility.web import ChromeDriver, Soup
 
-from selenium import webdriver
 import time
 
 def BusinessInsider():
@@ -21,7 +18,7 @@ def BusinessInsider():
     return posts
 
 def Load(num):
-    driver = webdriver.Chrome(Path("download", "chromedriver", "chromedriver"))
+    driver = ChromeDriver()
     driver.get("https://www.businessinsider.com/latest#")
 
     driver.switch_to.frame(driver.find_element_by_id("sp_message_iframe_364840"))
@@ -36,15 +33,12 @@ def Load(num):
     button = driver.find_elements_by_xpath(xpath)[0]
     button.click()
 
-    soup = Soup(driver.page_source)
-    posts = soup.findAll("section", {"class": "river-item featured-post"})
-    print(len(posts))
-
+    posts = []
     while len(posts) < num:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         soup = Soup(driver.page_source)
         posts = soup.findAll("section", {"class": "river-item featured-post"})
-        print(len(posts))
+        # print(len(posts))
 
     posts = [DataJson(post) for post in posts]
     posts = list(filter(None, posts))
@@ -79,4 +73,4 @@ def Timestamp(timeText):
     return int(timestamp + num * multiple)
 
 if __name__ == '__main__':
-    BusinessInsider(50)
+    BusinessInsider()

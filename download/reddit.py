@@ -71,7 +71,7 @@ def SubredditData(prawSubreddit):
     }
 
 def PostData(prawPost, maxCommentNums):
-    print("New post")
+    # print("New post")
     ### https://praw.readthedocs.io/en/latest/code_overview/models/submission.html
     data = {
         "id": prawPost.id,

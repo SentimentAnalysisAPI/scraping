@@ -12,20 +12,25 @@ from download.business_insider import BusinessInsider
 from download.reddit import Reddit
 from download.yahoo_finance import YahooFinance
 from utility.file import MakeFolder, Path, WriteJson
+
 import time
 
 def DownloadManager():
     data = {}
 
-    print("Downloading posts from 'Business Insider'")
+    name = "Business Insider"
+    print(f"Downloading", name, "posts")
     data["businessInsider"] = BusinessInsider()
+    print("Downloaded", len(data["businessInsider"]), "posts")
 
     ### Reddit not working as expected and slow
     # print("Downloading posts from 'Reddit'")
     # data["reddit"] = Reddit()
 
-    print("Downloading posts from 'Yahoo Finance'")
+    name = "Yahoo Finance"
+    print(f"Downloading", name, "posts")
     data["yahooFinance"] = YahooFinance()
+    print("Downloaded", len(data["yahooFinance"]), "posts")
 
     MakeFolder(Path("data"))
     WriteJson(Path("data", f"{int(time.time())}.json" ), data)
