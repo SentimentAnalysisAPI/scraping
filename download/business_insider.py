@@ -14,10 +14,11 @@ from utility.web import Click, Soup
 
 from selenium import webdriver
 import time
-import datetime
 
-def Main():
-    Load(50)
+def BusinessInsider():
+    num = 50
+    posts = Load(num)
+    return posts
 
 def Load(num):
     driver = webdriver.Chrome(Path("download", "chromedriver", "chromedriver"))
@@ -45,8 +46,9 @@ def Load(num):
         posts = soup.findAll("section", {"class": "river-item featured-post"})
         print(len(posts))
 
-    data = [DataJson(post) for post in posts]
-    WriteJson("businessinsider.json", data)
+    posts = [DataJson(post) for post in posts]
+    posts = list(filter(None, posts))
+    return posts
 
 def DataJson(post):
     try:
@@ -77,4 +79,4 @@ def Timestamp(timeText):
     return int(timestamp + num * multiple)
 
 if __name__ == '__main__':
-    Main()
+    BusinessInsider(50)

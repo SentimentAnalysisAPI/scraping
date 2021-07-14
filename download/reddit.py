@@ -15,11 +15,30 @@ from utility.web import Soup
 ### https://praw.readthedocs.io/en/latest/index.html
 import praw
 
-def Main(params):
+params = [
+    {
+        "subreddit": "wallstreetbets",
+        "sorts": ["hot", "new"],
+        "maxPostNum": 2,
+        "maxCommentNums": [3, 2]
+    },
+    {
+        "subreddit": "finance",
+        "sorts": ["hot", "new"],
+        "maxPostNum": 3,
+        "maxCommentNums": [5]
+    },
+    {
+        "subreddit": "stocks",
+        "sorts": ["hot", "new"],
+        "maxPostNum": 3,
+        "maxCommentNums": [5]
+    }
+]
+
+def Reddit():
     prawReddit = PrawReddit()
-
     posts = []
-
     for param in params:
         prawSubreddit = prawReddit.subreddit(param["subreddit"])
         limit = param["maxPostNum"]
@@ -33,11 +52,7 @@ def Main(params):
             prawPosts = list(prawPosts)
             for prawPost in prawPosts:
                 posts.append(PostData(prawPost, param["maxCommentNums"]))
-
-
     # PrintJson(SubredditData(prawSubreddit))
-
-
     return posts
 
 def PrawReddit():
@@ -86,30 +101,12 @@ def PostData(prawPost, maxCommentNums):
     return data
 
 def FormatComment(prawComment):
-    text = Soup(prawComment.body_html).text.strip("\n")
+    try:
+        text = Soup(prawComment.body_html).text.strip("\n")
+    except: text = ""
     while "\n\n" in text: text = text.replace("\n\n", "\n")
     return text
 
 if __name__ == '__main__':
-    params = [
-        {
-            "subreddit": "wallstreetbets",
-            "sorts": ["hot", "new"],
-            "maxPostNum": 2,
-            "maxCommentNums": [3, 2]
-        },
-        {
-            "subreddit": "finance",
-            "sorts": ["hot", "new"],
-            "maxPostNum": 3,
-            "maxCommentNums": [5]
-        },
-        {
-            "subreddit": "stocks",
-            "sorts": ["hot", "new"],
-            "maxPostNum": 3,
-            "maxCommentNums": [5]
-        }
-    ]
-    posts = Main(params[:1])
+    posts = Reddit(params[:1])
     PrintJson(posts)

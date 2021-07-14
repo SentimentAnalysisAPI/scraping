@@ -1,20 +1,20 @@
 # Financial Sentiment
 
-## Scraped Websites
+## Websites
 
 * Social Media
 
-    * Reddit
+    * ❔ Reddit - [praw](https://praw.readthedocs.io/en/v3.6.2/index.html), [pushshift.io](https://pushshift.io/)
 
     * Twitter
 
 * News
 
-    * [Yahoo Finance](https://finance.yahoo.com/)
+    * ✔️ [Yahoo Finance](https://finance.yahoo.com/) - selenium
+
+    * ✔️ [Business Insider](https://www.businessinsider.com/) - selenium
 
     * [MSN Money](https://www.msn.com/en-us/money)
-
-    * [Business Insider](https://www.businessinsider.com/)
 
     * [CNBC](https://www.cnbc.com/)
 
@@ -30,7 +30,7 @@
 
     * [Financial Express](https://www.financialexpress.com/)
 
-## Sentiment Analysis Modules
+## Sentiment Analysis
 
 * Text Blob ([textblob](https://textblob.readthedocs.io/en/dev/)), Vader Sentiment ([vaderseniment](https://github.com/cjhutto/vaderSentiment))
 

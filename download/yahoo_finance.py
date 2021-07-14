@@ -16,7 +16,7 @@ from selenium import webdriver
 import time
 import datetime
 
-def Main():
+def YahooFinance():
     posts = Load()
     return posts
 
@@ -43,15 +43,14 @@ def Load():
         print(len(posts))
 
     soup = Soup(driver.page_source)
-    WriteSoup("full.html", soup)
+    # WriteSoup("full.html", soup)
 
     # if not os.path.exists("test"): os.mkdir("test")
     # for i, post in enumerate(posts): WriteSoup(Path("download", "test", f"{str(i).zfill(3)}.html"), post)
 
     posts = [DataJson(post) for post in posts]
-
+    posts = list(filter(None, posts))
     # WriteJson("posts.json", posts)
-
     return posts
 
 def DataJson(post):
@@ -84,5 +83,5 @@ def Timestamp(timeText):
     return int(timestamp + num * multiple)
 
 if __name__ == '__main__':
-    posts = Main()
+    posts = YahooFinance()
     PrintJson(posts)
