@@ -13,7 +13,7 @@ from utility.web import ChromeDriver, Soup
 import time
 
 def BusinessInsider():
-    num = 50
+    num = 200
     posts = Load(num)
     return posts
 
@@ -34,11 +34,11 @@ def Load(num):
     button.click()
 
     posts = []
+    ### bad time complexity
     while len(posts) < num:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         soup = Soup(driver.page_source)
         posts = soup.findAll("section", {"class": "river-item featured-post"})
-        # print(len(posts))
 
     posts = [DataJson(post) for post in posts]
     posts = list(filter(None, posts))
