@@ -30,6 +30,8 @@
 
     * [Financial Express](https://www.financialexpress.com/)
 
+    * [Finviz](https://finviz.com/)
+
 ## Sentiment Analysis
 
 * Text Blob ([textblob](https://textblob.readthedocs.io/en/dev/)), Vader Sentiment ([vaderseniment](https://github.com/cjhutto/vaderSentiment))
@@ -45,6 +47,10 @@
     * [Sentiment Analysis with/without NLTK Python](https://youtube.com/playlist?list=PLhTjy8cBISEoOtB5_nwykvB9wfEDscuEo)
 
     * [Stock News Sentiment Analysis with Python!](https://towardsdatascience.com/stock-news-sentiment-analysis-with-python-193d4b4378d4)
+
+* SpaCy
+
+* Flair
 
 ## Other
 
